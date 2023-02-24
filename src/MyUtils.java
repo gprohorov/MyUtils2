@@ -289,10 +289,8 @@ class MyUtils {
     public static Map<String, List<String>> createNotebook(Map<String, String> phones) {
 
         Map<String, List<String>> map = new HashMap<>();
-        List<String> names = phones.values().stream()
-                .distinct().collect(Collectors.toList());
+        List<String> names = phones.values().stream().distinct().collect(Collectors.toList());
         for (String name:names){
-
             String key = name;
             List<String> value = new ArrayList<>();
             for (Map.Entry<String, String> entry:phones.entrySet()) {
@@ -318,12 +316,10 @@ class MyUtils {
 
 
     public static List<Employee> largestEmployees(List<Employee> workers) {
-        return workers.stream()
-                .distinct()
+        return workers.stream().distinct()
                 .sorted(Comparator.comparing(Employee::getExperience, Comparator.reverseOrder())
-             .thenComparing(Employee::getPayment, Comparator.reverseOrder())
-                )
-                 .limit(4)
+             .thenComparing(Employee::getPayment, Comparator.reverseOrder()))
+                 .limit(3)
                 .collect(Collectors.toList());
     }
 
