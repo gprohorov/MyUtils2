@@ -211,12 +211,14 @@ class Employee {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Employee employee = (Employee) o;
-        return getName().equals(employee.getName());
+        return getExperience() == employee.getExperience() &&
+                getName().equals(employee.getName()) &&
+                getBasePayment().equals(employee.getBasePayment());
     }
 
     @Override
     public int hashCode() {
-        return getName().hashCode();
+        return Objects.hash(getName(), getExperience(), getBasePayment());
     }
 
     @Override
@@ -256,13 +258,16 @@ class Manager extends Employee {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Employee employee = (Employee) o;
-        return getName().equals(employee.getName());
+        if(!super.equals(o)) return false;
+        Manager manager  = (Manager) o;
+        return getExperience() == manager.getExperience() &&
+                getName().equals(manager.getName()) &&
+                getPayment().equals(manager.getPayment());
     }
 
     @Override
     public int hashCode() {
-        return getName().hashCode();
+        return Objects.hash(getName(), getExperience(), getPayment());
     }
 
     @Override
@@ -316,7 +321,9 @@ class MyUtils {
 
 
     public static List<Employee> largestEmployees(List<Employee> workers) {
-        return workers.stream().distinct()
+        return workers.stream()
+                .filter(employee -> employee != null)
+                .distinct()
                 .sorted(Comparator.comparing(Employee::getExperience, Comparator.reverseOrder())
              .thenComparing(Employee::getPayment, Comparator.reverseOrder()))
                  .limit(3)
