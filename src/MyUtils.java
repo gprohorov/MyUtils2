@@ -285,7 +285,7 @@ class Manager extends Employee {
 
 class MyUtils {
 
-    public static List<Shape> maxAreas(List<Shape> shapes) {
+    public  List<Shape> maxAreas(List<Shape> shapes) {
         return shapes.stream()
                 .sorted(Comparator.comparing(Shape::getArea, Comparator.reverseOrder()))
                 .limit(3).collect(Collectors.toList());
